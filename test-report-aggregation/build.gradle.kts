@@ -13,12 +13,14 @@ dependencies {
   testReportAggregation(project(":docling-core"))
   testReportAggregation(project(":docling-serve-api"))
   testReportAggregation(project(":docling-serve-client"))
+  testReportAggregation(project(":docling-serve-grpc"))
   testReportAggregation(project(":docling-testcontainers"))
   testReportAggregation(project(":docling-version-tests"))
 
   jacocoAggregation(project(":docling-core"))
   jacocoAggregation(project(":docling-serve-api"))
   jacocoAggregation(project(":docling-serve-client"))
+  jacocoAggregation(project(":docling-serve-grpc"))
   jacocoAggregation(project(":docling-testcontainers"))
   jacocoAggregation(project(":docling-version-tests"))
 

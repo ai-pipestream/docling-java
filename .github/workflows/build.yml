@@ -48,6 +48,7 @@ jobs:
         module:
           - docling-serve-api
           - docling-serve-client
+          - docling-serve-grpc
           - docling-testcontainers
           - docling-version-tests
     name: jvm-build-test-${{ matrix.module }}-java${{ matrix.java }}
