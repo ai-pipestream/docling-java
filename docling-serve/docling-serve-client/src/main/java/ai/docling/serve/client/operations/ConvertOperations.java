@@ -8,6 +8,7 @@ import ai.docling.serve.api.DoclingServeTaskApi;
 import ai.docling.serve.api.convert.request.ConvertDocumentRequest;
 import ai.docling.serve.api.convert.response.ConvertDocumentResponse;
 import ai.docling.serve.api.task.request.TaskResultRequest;
+import ai.docling.serve.api.task.response.TaskStatusPollResponse;
 import ai.docling.serve.api.util.ValidationUtils;
 
 /**
@@ -50,6 +51,11 @@ public final class ConvertOperations extends AsyncOperations implements DoclingS
         .responseType(ConvertDocumentResponse.class)
         .uri(uri)
         .build();
+  }
+
+  @Override
+  public TaskStatusPollResponse submitConvertSource(ConvertDocumentRequest request) {
+    return submitAsync(request, "/v1/convert/source/async");
   }
 
   @Override

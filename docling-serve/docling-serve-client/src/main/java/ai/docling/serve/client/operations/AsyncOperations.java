@@ -61,6 +61,21 @@ public abstract class AsyncOperations {
    * @param uri the endpoint URI to which the request will be sent
    * @return a {@link CompletionStage} that will be completed with the result of the asynchronous operation
    */
+  /**
+   * Submits an asynchronous task to the specified URI and returns the initial task status
+   * without polling for completion. This is useful when the caller wants to manage polling
+   * separately (e.g., a gRPC async endpoint that returns the task ID immediately).
+   *
+   * @param <I> the type of the request object being sent
+   * @param request the request object containing the data necessary to initialize the task
+   * @param uri the endpoint URI to which the request will be sent
+   * @return a {@link TaskStatusPollResponse} containing the task ID and initial status
+   */
+  protected <I> TaskStatusPollResponse submitAsync(I request, String uri) {
+    ValidationUtils.ensureNotNull(request, "request");
+    return this.httpOperations.executePost(createAsyncRequestContext(uri, request));
+  }
+
   protected <I, O> CompletionStage<O> executeAsync(I request, String uri) {
     ValidationUtils.ensureNotNull(request, "request");
 

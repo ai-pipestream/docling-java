@@ -8,6 +8,7 @@ import org.jspecify.annotations.Nullable;
 
 import ai.docling.serve.api.convert.request.ConvertDocumentRequest;
 import ai.docling.serve.api.convert.response.ConvertDocumentResponse;
+import ai.docling.serve.api.task.response.TaskStatusPollResponse;
 import ai.docling.serve.api.util.FileUtils;
 import ai.docling.serve.api.util.ValidationUtils;
 
@@ -25,6 +26,19 @@ public interface DoclingServeConvertApi {
    * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
    */
   ConvertDocumentResponse convertSource(ConvertDocumentRequest request);
+
+  /**
+   * Submits an asynchronous conversion of the provided document source(s) and returns
+   * the initial task status immediately without waiting for completion. The returned
+   * {@link TaskStatusPollResponse} contains the task ID that can be used with
+   * {@link DoclingServeTaskApi#pollTaskStatus} and {@link DoclingServeTaskApi#convertTaskResult}
+   * to track progress and retrieve results.
+   *
+   * @param request the {@link ConvertDocumentRequest} containing the source(s) and conversion options.
+   * @return a {@link TaskStatusPollResponse} containing the task ID and initial status.
+   * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
+   */
+  TaskStatusPollResponse submitConvertSource(ConvertDocumentRequest request);
 
   /**
    * Converts the specified files into a processed document using default options.

@@ -300,13 +300,28 @@ public abstract class DoclingServeClient extends HttpOperations implements Docli
   }
 
   @Override
+  public TaskStatusPollResponse submitConvertSource(ConvertDocumentRequest request) {
+    return this.convertOps.submitConvertSource(request);
+  }
+
+  @Override
   public ChunkDocumentResponse chunkSourceWithHierarchicalChunker(HierarchicalChunkDocumentRequest request) {
     return this.chunkOps.chunkSourceWithHierarchicalChunker(request);
   }
 
   @Override
+  public TaskStatusPollResponse submitChunkHierarchicalSource(HierarchicalChunkDocumentRequest request) {
+    return this.chunkOps.submitChunkHierarchicalSource(request);
+  }
+
+  @Override
   public ChunkDocumentResponse chunkSourceWithHybridChunker(HybridChunkDocumentRequest request) {
     return this.chunkOps.chunkSourceWithHybridChunker(request);
+  }
+
+  @Override
+  public TaskStatusPollResponse submitChunkHybridSource(HybridChunkDocumentRequest request) {
+    return this.chunkOps.submitChunkHybridSource(request);
   }
 
   @Override
