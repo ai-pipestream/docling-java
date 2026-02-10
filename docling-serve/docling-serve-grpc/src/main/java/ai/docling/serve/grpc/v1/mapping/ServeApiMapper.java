@@ -51,6 +51,11 @@ import java.time.Duration;
  */
 public class ServeApiMapper {
 
+  /**
+   * Utility class; prevent instantiation.
+   */
+  private ServeApiMapper() {}
+
   // ==================== Proto → Java (Request Mapping) ====================
 
   /**
