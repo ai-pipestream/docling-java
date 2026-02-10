@@ -102,7 +102,10 @@ DoclingServeApi restClient = DoclingServeApi.builder()
     .build();
 
 // 2. Instantiate the gRPC service implementation
-DoclingServeGrpcService grpcService = new DoclingServeGrpcService(restClient);
+DoclingServeGrpcService grpcService = new DoclingServeGrpcService(
+    restClient,
+    URI.create("http://localhost:8000")
+);
 
 // 3. Start the gRPC server
 var server = ServerBuilder.forPort(9000)
@@ -123,6 +126,7 @@ import ai.docling.serve.v1.DoclingServeServiceGrpc;
 import ai.docling.serve.v1.HttpSource;
 import ai.docling.serve.v1.Source;
 import io.grpc.ManagedChannelBuilder;
+import java.net.URI;
 
 // 1. Create a channel and a blocking stub
 var channel = ManagedChannelBuilder.forAddress("localhost", 9000)

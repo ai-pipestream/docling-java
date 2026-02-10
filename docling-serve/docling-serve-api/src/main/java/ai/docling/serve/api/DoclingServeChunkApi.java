@@ -9,7 +9,6 @@ import ai.docling.serve.api.chunk.request.ChunkType;
 import ai.docling.serve.api.chunk.request.HierarchicalChunkDocumentRequest;
 import ai.docling.serve.api.chunk.request.HybridChunkDocumentRequest;
 import ai.docling.serve.api.chunk.response.ChunkDocumentResponse;
-import ai.docling.serve.api.task.response.TaskStatusPollResponse;
 import ai.docling.serve.api.util.FileUtils;
 import ai.docling.serve.api.util.ValidationUtils;
 
@@ -27,17 +26,6 @@ public interface DoclingServeChunkApi {
    * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
    */
   ChunkDocumentResponse chunkSourceWithHierarchicalChunker(HierarchicalChunkDocumentRequest request);
-
-  /**
-   * Submits an asynchronous hierarchical chunking task and returns the initial task status
-   * immediately without waiting for completion. The returned {@link TaskStatusPollResponse}
-   * contains the task ID that can be used to track progress and retrieve results.
-   *
-   * @param request the request containing the document source(s) and options for hierarchical chunking
-   * @return a {@link TaskStatusPollResponse} containing the task ID and initial status
-   * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
-   */
-  TaskStatusPollResponse submitChunkHierarchicalSource(HierarchicalChunkDocumentRequest request);
 
   /**
    * Processes and chunks the specified files into smaller, structured pieces
@@ -97,18 +85,6 @@ public interface DoclingServeChunkApi {
    * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
    */
   ChunkDocumentResponse chunkSourceWithHybridChunker(HybridChunkDocumentRequest request);
-
-  /**
-   * Submits an asynchronous hybrid chunking task and returns the initial task status
-   * immediately without waiting for completion. The returned {@link TaskStatusPollResponse}
-   * contains the task ID that can be used to track progress and retrieve results.
-   *
-   * @param request the request containing the document source(s), options for conversion,
-   *                and hybrid chunking parameters
-   * @return a {@link TaskStatusPollResponse} containing the task ID and initial status
-   * @throws ai.docling.serve.api.validation.ValidationException If request validation fails for any reason.
-   */
-  TaskStatusPollResponse submitChunkHybridSource(HybridChunkDocumentRequest request);
 
   /**
    * Processes and chunks the specified files into smaller, structured pieces

@@ -20,10 +20,8 @@ dependencies {
   api("com.google.protobuf:protobuf-java:$protocVersion")
   api(libs.slf4j.api)
   compileOnly("javax.annotation:javax.annotation-api:$javaxAnnotationVersion")
-  compileOnly(platform(libs.jackson.bom))
-  compileOnly(libs.jackson.annotations)
-  compileOnly(libs.jackson.databind)
-  compileOnly(libs.jackson2.databind)
+  api(platform(libs.jackson.bom))
+  api(libs.jackson.databind)
 
   testImplementation("org.mockito:mockito-core:5.17.0")
   testImplementation("org.mockito:mockito-junit-jupiter:5.17.0")

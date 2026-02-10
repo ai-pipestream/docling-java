@@ -47,7 +47,10 @@ import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.time.Duration;
+
+import org.jspecify.annotations.Nullable;
 
 /**
  * gRPC service implementation for DoclingServe.
@@ -68,15 +71,42 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
   private static final Duration DEFAULT_POLL_TIMEOUT = Duration.ofMinutes(5);
 
   private final DoclingServeApi api;
+  private final @Nullable AsyncTaskSubmitter asyncSubmitter;
   private final Duration pollInterval;
   private final Duration pollTimeout;
 
   public DoclingServeGrpcService(DoclingServeApi api) {
-    this(api, DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT);
+    this(api, (AsyncTaskSubmitter) null, DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT);
   }
 
   public DoclingServeGrpcService(DoclingServeApi api, Duration pollInterval, Duration pollTimeout) {
+    this(api, (AsyncTaskSubmitter) null, pollInterval, pollTimeout);
+  }
+
+  public DoclingServeGrpcService(DoclingServeApi api, URI baseUrl) {
+    this(api, baseUrl, null, DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT);
+  }
+
+  public DoclingServeGrpcService(DoclingServeApi api, URI baseUrl, @Nullable String apiKey) {
+    this(api, baseUrl, apiKey, DEFAULT_POLL_INTERVAL, DEFAULT_POLL_TIMEOUT);
+  }
+
+  public DoclingServeGrpcService(
+      DoclingServeApi api,
+      URI baseUrl,
+      @Nullable String apiKey,
+      Duration pollInterval,
+      Duration pollTimeout) {
+    this(api, new HttpAsyncTaskSubmitter(baseUrl, apiKey), pollInterval, pollTimeout);
+  }
+
+  public DoclingServeGrpcService(
+      DoclingServeApi api,
+      @Nullable AsyncTaskSubmitter asyncSubmitter,
+      Duration pollInterval,
+      Duration pollTimeout) {
     this.api = api;
+    this.asyncSubmitter = asyncSubmitter;
     this.pollInterval = pollInterval;
     this.pollTimeout = pollTimeout;
   }
@@ -122,7 +152,7 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<ConvertSourceAsyncResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var javaResponse = api.submitConvertSource(javaRequest);
+      var javaResponse = requireAsyncSubmitter("ConvertSourceAsync").submitConvertSource(javaRequest);
       responseObserver.onNext(ConvertSourceAsyncResponse.newBuilder()
           .setResponse(ServeApiMapper.toProto(javaResponse))
           .build());
@@ -197,7 +227,8 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<ChunkHierarchicalSourceAsyncResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var javaResponse = api.submitChunkHierarchicalSource(javaRequest);
+      var javaResponse = requireAsyncSubmitter("ChunkHierarchicalSourceAsync")
+          .submitChunkHierarchicalSource(javaRequest);
       responseObserver.onNext(ChunkHierarchicalSourceAsyncResponse.newBuilder()
           .setResponse(ServeApiMapper.toProto(javaResponse))
           .build());
@@ -215,7 +246,8 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<ChunkHybridSourceAsyncResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var javaResponse = api.submitChunkHybridSource(javaRequest);
+      var javaResponse = requireAsyncSubmitter("ChunkHybridSourceAsync")
+          .submitChunkHybridSource(javaRequest);
       responseObserver.onNext(ChunkHybridSourceAsyncResponse.newBuilder()
           .setResponse(ServeApiMapper.toProto(javaResponse))
           .build());
@@ -291,7 +323,7 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<WatchConvertSourceResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var initialStatus = api.submitConvertSource(javaRequest);
+      var initialStatus = requireAsyncSubmitter("WatchConvertSource").submitConvertSource(javaRequest);
       pollAndStream(initialStatus, responseObserver, "WatchConvertSource", status ->
           WatchConvertSourceResponse.newBuilder().setResponse(ServeApiMapper.toProto(status)).build());
     } catch (Exception e) {
@@ -307,7 +339,8 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<WatchChunkHierarchicalSourceResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var initialStatus = api.submitChunkHierarchicalSource(javaRequest);
+      var initialStatus = requireAsyncSubmitter("WatchChunkHierarchicalSource")
+          .submitChunkHierarchicalSource(javaRequest);
       pollAndStream(initialStatus, responseObserver, "WatchChunkHierarchicalSource", status ->
           WatchChunkHierarchicalSourceResponse.newBuilder().setResponse(ServeApiMapper.toProto(status)).build());
     } catch (Exception e) {
@@ -323,7 +356,8 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
       StreamObserver<WatchChunkHybridSourceResponse> responseObserver) {
     try {
       var javaRequest = ServeApiMapper.toJava(request.getRequest());
-      var initialStatus = api.submitChunkHybridSource(javaRequest);
+      var initialStatus = requireAsyncSubmitter("WatchChunkHybridSource")
+          .submitChunkHybridSource(javaRequest);
       pollAndStream(initialStatus, responseObserver, "WatchChunkHybridSource", status ->
           WatchChunkHybridSourceResponse.newBuilder().setResponse(ServeApiMapper.toProto(status)).build());
     } catch (Exception e) {
@@ -403,6 +437,15 @@ public class DoclingServeGrpcService extends DoclingServeServiceGrpc.DoclingServ
 
   private static boolean isTerminal(TaskStatus status) {
     return status == TaskStatus.SUCCESS || status == TaskStatus.FAILURE;
+  }
+
+  private AsyncTaskSubmitter requireAsyncSubmitter(String rpcName) {
+    if (this.asyncSubmitter == null) {
+      throw Status.FAILED_PRECONDITION
+          .withDescription("%s requires an async submitter (configure DoclingServeGrpcService with a base URL)".formatted(rpcName))
+          .asRuntimeException();
+    }
+    return this.asyncSubmitter;
   }
 
   // ==================== Clear ====================

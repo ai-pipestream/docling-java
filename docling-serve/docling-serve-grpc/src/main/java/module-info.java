@@ -6,11 +6,11 @@ module ai.docling.serve.grpc {
   requires com.google.protobuf;
   requires org.slf4j;
   requires java.annotation;
+  requires java.net.http;
 
   requires static lombok;
-  requires static com.fasterxml.jackson.annotation;
-  requires static com.fasterxml.jackson.databind;
-  requires static tools.jackson.databind;
+  requires static org.jspecify;
+  requires tools.jackson.databind;
   requires static com.google.errorprone.annotations;
 
   exports ai.docling.serve.grpc.v1;

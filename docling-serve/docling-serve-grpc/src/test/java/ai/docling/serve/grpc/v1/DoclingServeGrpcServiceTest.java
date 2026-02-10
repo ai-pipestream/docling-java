@@ -67,6 +67,9 @@ class DoclingServeGrpcServiceTest {
     @Mock
     private DoclingServeApi api;
 
+    @Mock
+    private AsyncTaskSubmitter asyncSubmitter;
+
     private ManagedChannel channel;
     private DoclingServeServiceGrpc.DoclingServeServiceBlockingStub blockingStub;
     private String serverName;
@@ -76,7 +79,7 @@ class DoclingServeGrpcServiceTest {
         serverName = InProcessServerBuilder.generateName();
         var server = InProcessServerBuilder.forName(serverName)
             .directExecutor()
-            .addService(new DoclingServeGrpcService(api,
+            .addService(new DoclingServeGrpcService(api, asyncSubmitter,
                 Duration.ofMillis(50), Duration.ofSeconds(5)))
             .build()
             .start();
@@ -173,7 +176,7 @@ class DoclingServeGrpcServiceTest {
                 .taskPosition(0L)
                 .build();
 
-            when(api.submitConvertSource(any(ConvertDocumentRequest.class)))
+            when(asyncSubmitter.submitConvertSource(any(ConvertDocumentRequest.class)))
                 .thenReturn(taskResponse);
 
             var response = blockingStub.convertSourceAsync(
@@ -182,7 +185,7 @@ class DoclingServeGrpcServiceTest {
             assertThat(response.getResponse().getTaskId()).isEqualTo("task-123");
             assertThat(response.getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_STARTED);
-            verify(api).submitConvertSource(any(ConvertDocumentRequest.class));
+            verify(asyncSubmitter).submitConvertSource(any(ConvertDocumentRequest.class));
         }
 
         @Test
@@ -263,8 +266,8 @@ class DoclingServeGrpcServiceTest {
                 .taskPosition(1L)
                 .build();
 
-            when(api.submitChunkHierarchicalSource(
-                    any(HierarchicalChunkDocumentRequest.class)))
+            when(asyncSubmitter.submitChunkHierarchicalSource(
+                any(HierarchicalChunkDocumentRequest.class)))
                 .thenReturn(taskResponse);
 
             var response = blockingStub.chunkHierarchicalSourceAsync(
@@ -273,7 +276,7 @@ class DoclingServeGrpcServiceTest {
             assertThat(response.getResponse().getTaskId()).isEqualTo("chunk-task-1");
             assertThat(response.getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_PENDING);
-            verify(api).submitChunkHierarchicalSource(
+            verify(asyncSubmitter).submitChunkHierarchicalSource(
                 any(HierarchicalChunkDocumentRequest.class));
         }
 
@@ -285,7 +288,7 @@ class DoclingServeGrpcServiceTest {
                 .taskPosition(0L)
                 .build();
 
-            when(api.submitChunkHybridSource(any(HybridChunkDocumentRequest.class)))
+            when(asyncSubmitter.submitChunkHybridSource(any(HybridChunkDocumentRequest.class)))
                 .thenReturn(taskResponse);
 
             var response = blockingStub.chunkHybridSourceAsync(
@@ -294,7 +297,7 @@ class DoclingServeGrpcServiceTest {
             assertThat(response.getResponse().getTaskId()).isEqualTo("chunk-task-2");
             assertThat(response.getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_STARTED);
-            verify(api).submitChunkHybridSource(
+            verify(asyncSubmitter).submitChunkHybridSource(
                 any(HybridChunkDocumentRequest.class));
         }
     }
@@ -388,7 +391,7 @@ class DoclingServeGrpcServiceTest {
                 .taskPosition(0L)
                 .build();
 
-            when(api.submitConvertSource(any(ConvertDocumentRequest.class)))
+            when(asyncSubmitter.submitConvertSource(any(ConvertDocumentRequest.class)))
                 .thenReturn(submitResponse);
             when(api.pollTaskStatus(any(TaskStatusPollRequest.class)))
                 .thenReturn(polledStarted, polledSuccess);
@@ -405,7 +408,7 @@ class DoclingServeGrpcServiceTest {
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_STARTED);
             assertThat(responses.get(2).getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_SUCCESS);
-            verify(api).submitConvertSource(any(ConvertDocumentRequest.class));
+            verify(asyncSubmitter).submitConvertSource(any(ConvertDocumentRequest.class));
             verify(api, times(2)).pollTaskStatus(any(TaskStatusPollRequest.class));
         }
 
@@ -420,8 +423,8 @@ class DoclingServeGrpcServiceTest {
                 .taskStatus(TaskStatus.SUCCESS)
                 .build();
 
-            when(api.submitChunkHierarchicalSource(
-                    any(HierarchicalChunkDocumentRequest.class)))
+            when(asyncSubmitter.submitChunkHierarchicalSource(
+                any(HierarchicalChunkDocumentRequest.class)))
                 .thenReturn(submitResponse);
             when(api.pollTaskStatus(any(TaskStatusPollRequest.class)))
                 .thenReturn(polledSuccess);
@@ -436,7 +439,7 @@ class DoclingServeGrpcServiceTest {
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_PENDING);
             assertThat(responses.get(1).getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_SUCCESS);
-            verify(api).submitChunkHierarchicalSource(
+            verify(asyncSubmitter).submitChunkHierarchicalSource(
                 any(HierarchicalChunkDocumentRequest.class));
             verify(api, times(1)).pollTaskStatus(any(TaskStatusPollRequest.class));
         }
@@ -452,7 +455,7 @@ class DoclingServeGrpcServiceTest {
                 .taskStatus(TaskStatus.SUCCESS)
                 .build();
 
-            when(api.submitChunkHybridSource(any(HybridChunkDocumentRequest.class)))
+            when(asyncSubmitter.submitChunkHybridSource(any(HybridChunkDocumentRequest.class)))
                 .thenReturn(submitResponse);
             when(api.pollTaskStatus(any(TaskStatusPollRequest.class)))
                 .thenReturn(polledSuccess);
@@ -467,7 +470,7 @@ class DoclingServeGrpcServiceTest {
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_STARTED);
             assertThat(responses.get(1).getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_SUCCESS);
-            verify(api).submitChunkHybridSource(any(HybridChunkDocumentRequest.class));
+            verify(asyncSubmitter).submitChunkHybridSource(any(HybridChunkDocumentRequest.class));
         }
 
         @Test
@@ -477,7 +480,7 @@ class DoclingServeGrpcServiceTest {
                 .taskStatus(TaskStatus.SUCCESS)
                 .build();
 
-            when(api.submitConvertSource(any(ConvertDocumentRequest.class)))
+            when(asyncSubmitter.submitConvertSource(any(ConvertDocumentRequest.class)))
                 .thenReturn(submitResponse);
 
             var responses = new ArrayList<WatchConvertSourceResponse>();
@@ -488,7 +491,7 @@ class DoclingServeGrpcServiceTest {
             assertThat(responses).hasSize(1);
             assertThat(responses.get(0).getResponse().getTaskStatus())
                 .isEqualTo(ai.docling.serve.v1.TaskStatus.TASK_STATUS_SUCCESS);
-            verify(api).submitConvertSource(any(ConvertDocumentRequest.class));
+            verify(asyncSubmitter).submitConvertSource(any(ConvertDocumentRequest.class));
             verify(api, times(0)).pollTaskStatus(any(TaskStatusPollRequest.class));
         }
 
@@ -503,7 +506,7 @@ class DoclingServeGrpcServiceTest {
                 .taskStatus(TaskStatus.FAILURE)
                 .build();
 
-            when(api.submitConvertSource(any(ConvertDocumentRequest.class)))
+            when(asyncSubmitter.submitConvertSource(any(ConvertDocumentRequest.class)))
                 .thenReturn(submitResponse);
             when(api.pollTaskStatus(any(TaskStatusPollRequest.class)))
                 .thenReturn(polledFailure);
@@ -527,7 +530,7 @@ class DoclingServeGrpcServiceTest {
                 .taskStatus(TaskStatus.PENDING)
                 .build();
 
-            when(api.submitConvertSource(any(ConvertDocumentRequest.class)))
+            when(asyncSubmitter.submitConvertSource(any(ConvertDocumentRequest.class)))
                 .thenReturn(submitResponse);
             when(api.pollTaskStatus(any(TaskStatusPollRequest.class)))
                 .thenThrow(new RuntimeException("Poll connection refused"));

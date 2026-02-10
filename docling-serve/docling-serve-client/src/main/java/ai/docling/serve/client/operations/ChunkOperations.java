@@ -9,7 +9,6 @@ import ai.docling.serve.api.chunk.request.HierarchicalChunkDocumentRequest;
 import ai.docling.serve.api.chunk.request.HybridChunkDocumentRequest;
 import ai.docling.serve.api.chunk.response.ChunkDocumentResponse;
 import ai.docling.serve.api.task.request.TaskResultRequest;
-import ai.docling.serve.api.task.response.TaskStatusPollResponse;
 import ai.docling.serve.api.util.ValidationUtils;
 
 /**
@@ -42,16 +41,6 @@ public final class ChunkOperations extends AsyncOperations implements DoclingSer
   public ChunkDocumentResponse chunkSourceWithHybridChunker(HybridChunkDocumentRequest request) {
     ValidationUtils.ensureNotNull(request, "request");
     return this.httpOperations.executePost(createRequestContext("/v1/chunk/hybrid/source", request));
-  }
-
-  @Override
-  public TaskStatusPollResponse submitChunkHierarchicalSource(HierarchicalChunkDocumentRequest request) {
-    return submitAsync(request, "/v1/chunk/hierarchical/source/async");
-  }
-
-  @Override
-  public TaskStatusPollResponse submitChunkHybridSource(HybridChunkDocumentRequest request) {
-    return submitAsync(request, "/v1/chunk/hybrid/source/async");
   }
 
   @Override

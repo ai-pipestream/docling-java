@@ -101,7 +101,7 @@ class DoclingServeGrpcIntegrationTest {
         String serverName = InProcessServerBuilder.generateName();
         InProcessServerBuilder.forName(serverName)
             .directExecutor()
-            .addService(new DoclingServeGrpcService(restClient))
+            .addService(new DoclingServeGrpcService(restClient, URI.create(container.getApiUrl())))
             .build()
             .start();
 
