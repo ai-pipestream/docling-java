@@ -38,7 +38,6 @@ import ai.docling.serve.api.task.request.TaskStatusPollRequest;
 import ai.docling.serve.api.task.response.TaskStatus;
 import ai.docling.serve.api.task.response.TaskStatusMetadata;
 import ai.docling.serve.api.task.response.TaskStatusPollResponse;
-import ai.docling.serve.v1.*;
 
 import java.net.URI;
 import java.time.Duration;
@@ -206,9 +205,14 @@ public class ServeApiMapper {
     if (proto == null) {
       return ClearResultsRequest.builder().build();
     }
-    return ClearResultsRequest.builder()
-        .olderThen(Duration.ofMillis((long) (proto.getOlderThan() * 1000)))
-        .build();
+    var builder = ClearResultsRequest.builder();
+    if (proto.hasOlderThan()) {
+      double olderThanSeconds = proto.getOlderThan();
+      if (Double.isFinite(olderThanSeconds) && olderThanSeconds > 0) {
+        builder.olderThen(Duration.ofMillis((long) (olderThanSeconds * 1000)));
+      }
+    }
+    return builder.build();
   }
 
   // ==================== Java → Proto (Response Mapping) ====================
@@ -616,10 +620,10 @@ public class ServeApiMapper {
       TaskStatusMetadata java) {
     ai.docling.serve.v1.TaskStatusMetadata.Builder builder =
         ai.docling.serve.v1.TaskStatusMetadata.newBuilder();
-    builder.setNumDocs(java.getNumDocs());
-    builder.setNumProcessed(java.getNumProcessed());
-    builder.setNumSucceeded(java.getNumSucceeded());
-    builder.setNumFailed(java.getNumFailed());
+    ProtoMapping.ifNonNull(java.getNumDocs(), builder::setNumDocs);
+    ProtoMapping.ifNonNull(java.getNumProcessed(), builder::setNumProcessed);
+    ProtoMapping.ifNonNull(java.getNumSucceeded(), builder::setNumSucceeded);
+    ProtoMapping.ifNonNull(java.getNumFailed(), builder::setNumFailed);
     return builder.build();
   }
 

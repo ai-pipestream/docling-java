@@ -7,7 +7,27 @@ import java.math.BigInteger;
 import java.util.List;
 
 import ai.docling.core.DoclingDocument;
-import ai.docling.core.v1.*;
+import ai.docling.core.v1.BoundingBox;
+import ai.docling.core.v1.ContentLayer;
+import ai.docling.core.v1.DocItemLabel;
+import ai.docling.core.v1.DocumentOrigin;
+import ai.docling.core.v1.Formatting;
+import ai.docling.core.v1.GraphCell;
+import ai.docling.core.v1.GraphCellLabel;
+import ai.docling.core.v1.GraphData;
+import ai.docling.core.v1.GraphLink;
+import ai.docling.core.v1.GraphLinkLabel;
+import ai.docling.core.v1.ImageRef;
+import ai.docling.core.v1.KeyValueItem;
+import ai.docling.core.v1.PageItem;
+import ai.docling.core.v1.ProvenanceItem;
+import ai.docling.core.v1.Script;
+import ai.docling.core.v1.SectionHeaderItem;
+import ai.docling.core.v1.Size;
+import ai.docling.core.v1.TableCell;
+import ai.docling.core.v1.TableData;
+import ai.docling.core.v1.TableItem;
+import ai.docling.core.v1.TextItem;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

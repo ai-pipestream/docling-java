@@ -7,6 +7,8 @@ import java.time.Duration;
 import java.util.List;
 
 import ai.docling.core.DoclingDocument;
+import ai.docling.core.v1.GroupItem;
+import ai.docling.core.v1.GroupLabel;
 import ai.docling.serve.api.chunk.response.Chunk;
 import ai.docling.serve.api.chunk.response.ChunkDocumentResponse;
 import ai.docling.serve.api.chunk.response.Document;
@@ -33,7 +35,17 @@ import ai.docling.serve.api.clear.response.ClearResponse;
 import ai.docling.serve.api.task.response.TaskStatus;
 import ai.docling.serve.api.task.response.TaskStatusMetadata;
 import ai.docling.serve.api.task.response.TaskStatusPollResponse;
-import ai.docling.serve.v1.*;
+import ai.docling.serve.v1.ClearResultsRequest;
+import ai.docling.serve.v1.ConvertDocumentOptions;
+import ai.docling.serve.v1.ConvertDocumentRequest;
+import ai.docling.serve.v1.HierarchicalChunkRequest;
+import ai.docling.serve.v1.HierarchicalChunkerOptions;
+import ai.docling.serve.v1.HybridChunkRequest;
+import ai.docling.serve.v1.HybridChunkerOptions;
+import ai.docling.serve.v1.Source;
+import ai.docling.serve.v1.Target;
+import ai.docling.serve.v1.TaskResultRequest;
+import ai.docling.serve.v1.TaskStatusPollRequest;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

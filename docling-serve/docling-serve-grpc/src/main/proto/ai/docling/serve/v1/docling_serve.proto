@@ -182,7 +182,7 @@ message ClearConvertersResponse {
 
 message ClearResultsRequest {
   // Clear results older than this many seconds (default: 3600)
-  double older_than = 1;
+  optional double older_than = 1;
 }
 
 message ClearResultsResponse {

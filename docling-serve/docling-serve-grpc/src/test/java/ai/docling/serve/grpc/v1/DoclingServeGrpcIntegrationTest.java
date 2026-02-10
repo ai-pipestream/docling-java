@@ -19,7 +19,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ai.docling.serve.api.DoclingServeApi;
-import ai.docling.serve.v1.*;
+import ai.docling.serve.v1.Chunk;
+import ai.docling.serve.v1.ChunkHierarchicalSourceRequest;
+import ai.docling.serve.v1.ChunkHybridSourceRequest;
+import ai.docling.serve.v1.ClearConvertersRequest;
+import ai.docling.serve.v1.ClearResultsRequest;
+import ai.docling.serve.v1.ConvertDocumentOptions;
+import ai.docling.serve.v1.ConvertDocumentRequest;
+import ai.docling.serve.v1.ConvertSourceRequest;
+import ai.docling.serve.v1.DoclingServeServiceGrpc;
+import ai.docling.serve.v1.HealthRequest;
+import ai.docling.serve.v1.HierarchicalChunkRequest;
+import ai.docling.serve.v1.HierarchicalChunkerOptions;
+import ai.docling.serve.v1.HttpSource;
+import ai.docling.serve.v1.HybridChunkRequest;
+import ai.docling.serve.v1.HybridChunkerOptions;
+import ai.docling.serve.v1.OutputFormat;
+import ai.docling.serve.v1.Source;
 import ai.docling.testcontainers.serve.DoclingServeContainer;
 import ai.docling.testcontainers.serve.config.DoclingServeContainerConfig;
 

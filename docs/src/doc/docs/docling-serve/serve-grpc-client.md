@@ -68,7 +68,7 @@ This is a common practice in gRPC development.  It allows you to retain your pre
 
 ## Design Philosophy: REST vs. gRPC Best Practices
 
-While this module provides a functional 1:1 mapping of the Docling Serve REST API, the gRPC implementation intentionally follows Google's API Design Guide and [Buf](https://buf.build/docs/lint/overview/) linting standards.
+While this module provides a functional 1:1 mapping of the Docling Serve REST API, the gRPC implementation intentionally follows [Protobuf Definition Guide](https://protobuf.dev/reference/protobuf/google.protobuf/) and [Buf](https://buf.build/docs/lint/overview/) linting standards.
 
 ### Logical Mapping - gRPC for gRPC and REST for REST
 Many gRPC implementations often overlook the long-term maintenance costs of using domain entities or shared models directly as RPC request/response types. While this seems convenient initially, it can lead to significant technical debt and confusion:
@@ -115,7 +115,13 @@ var server = ServerBuilder.forPort(9000)
 When calling the service from a gRPC client, notice how the domain request (`ConvertDocumentRequest`) is wrapped in a specific RPC request (`ConvertSourceRequest`). This follows the design philosophy of method independence.
 
 ```java
-import ai.docling.serve.v1.*;
+import ai.docling.serve.v1.ConvertDocumentRequest;
+import ai.docling.serve.v1.ConvertDocumentResponse;
+import ai.docling.serve.v1.ConvertSourceRequest;
+import ai.docling.serve.v1.ConvertSourceResponse;
+import ai.docling.serve.v1.DoclingServeServiceGrpc;
+import ai.docling.serve.v1.HttpSource;
+import ai.docling.serve.v1.Source;
 import io.grpc.ManagedChannelBuilder;
 
 // 1. Create a channel and a blocking stub
