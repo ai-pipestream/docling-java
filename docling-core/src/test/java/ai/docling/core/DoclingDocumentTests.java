@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ai.docling.core.DoclingDocument.BaseMeta;
 import ai.docling.core.DoclingDocument.ContentLayer;
 import ai.docling.core.DoclingDocument.DocItemLabel;
-import ai.docling.core.DoclingDocument.EntityMention;
 import ai.docling.core.DoclingDocument.EntitiesMetaField;
+import ai.docling.core.DoclingDocument.EntityMention;
 import ai.docling.core.DoclingDocument.FieldHeadingItem;
 import ai.docling.core.DoclingDocument.FieldItem;
 import ai.docling.core.DoclingDocument.FieldRegionItem;
@@ -129,7 +129,7 @@ class DoclingDocumentTests {
   }
 
   @Test
-  void shouldDeserializeEntityMentionCharsanAsArray() throws Exception {
+  void shouldDeserializeEntityMentionCharspanAsArray() throws Exception {
     ObjectMapper mapper = new ObjectMapper();
     String json = """
         {"text": "IBM", "label": "ORG", "charspan": [0, 3]}

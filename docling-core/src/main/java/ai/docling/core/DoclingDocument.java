@@ -252,7 +252,11 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
-
+  /**
+   * Detected human language of a document node, expressed as a BCP 47 code (e.g. {@code "en"}).
+   */
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  @tools.jackson.databind.annotation.JsonDeserialize(builder = LanguageMetaField.Builder.class)
   @lombok.extern.jackson.Jacksonized
   @lombok.Builder(toBuilder = true)
   @lombok.Getter
@@ -273,6 +277,10 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * A named entity mention extracted from text, carrying the entity text, an optional type label,
+   * and an optional character span as a 2-element JSON array {@code [start, end]}.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = EntityMention.Builder.class)
   @lombok.extern.jackson.Jacksonized
@@ -312,6 +320,9 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * Container for named entity mentions associated with a document node.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = EntitiesMetaField.Builder.class)
   @lombok.extern.jackson.Jacksonized
@@ -328,6 +339,10 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * Container for salient keyword or keyphrase metadata associated with a document node.
+   * Values are order-preserving and deduplicated.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = KeywordsMetaField.Builder.class)
   @lombok.extern.jackson.Jacksonized
@@ -344,6 +359,10 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * Container for higher-level subject category or thematic label metadata associated with a
+   * document node. Values are order-preserving and deduplicated.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = TopicsMetaField.Builder.class)
   @lombok.extern.jackson.Jacksonized
@@ -1749,6 +1768,10 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * Represents a form field region container, grouping one or more related field items within a
+   * document. Corresponds to the Python {@code FieldRegionItem} with label {@code "field_region"}.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = FieldRegionItem.Builder.class)
   @lombok.extern.jackson.Jacksonized
@@ -1797,6 +1820,11 @@ public class DoclingDocument {
     public static class Builder { }
   }
 
+  /**
+   * Represents a single form field item within a document, typically nested inside a
+   * {@link FieldRegionItem}. Corresponds to the Python {@code FieldItem} with label
+   * {@code "field_item"}.
+   */
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   @tools.jackson.databind.annotation.JsonDeserialize(builder = FieldItem.Builder.class)
   @lombok.extern.jackson.Jacksonized
