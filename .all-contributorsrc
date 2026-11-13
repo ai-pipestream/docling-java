@@ -201,6 +201,80 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "rkudryashov",
+      "name": "Roman Kudryashov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37952224?v=4",
+      "profile": "https://romankudryashov.com",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "margi212",
+      "name": "Margi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39212098?v=4",
+      "profile": "http://linkedin.com/in/margi212",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "seanJosephFitzpatrick",
+      "name": "Sean Fitzpatrick",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9217947?v=4",
+      "profile": "https://github.com/seanJosephFitzpatrick",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "swetasamasti2310",
+      "name": "Sweta Kumari",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30685943?v=4",
+      "profile": "https://github.com/swetasamasti2310",
+      "contributions": [
+        "maintenance"
+      ]
+    },
+    {
+      "login": "Ashfaqbs",
+      "name": "Ashfaq",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105435085?v=4",
+      "profile": "https://github.com/Ashfaqbs",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "Naman-Gururani",
+      "name": "Naman-Gururani",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91726734?v=4",
+      "profile": "https://github.com/Naman-Gururani",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Krambamboli",
+      "name": "Olischn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43171471?v=4",
+      "profile": "https://github.com/Krambamboli",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "RaphaelFakhri",
+      "name": "Raphael Fakhri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/153192858?v=4",
+      "profile": "https://raphaelfakhri.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }

@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.Nulls;
  * @see DocumentArtifactItem
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = PreSignedUrlConvertResponse.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -101,16 +100,16 @@ public final class PreSignedUrlConvertResponse extends ConvertDocumentResponse {
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code processingTime(Double)} - Set the total processing time in seconds</li>
-   *   <li>{@code numConverted(Integer)} - Set the number of attempted conversions</li>
-   *   <li>{@code numSucceeded(Integer)} - Set the number of successful conversions</li>
-   *   <li>{@code numPartiallySucceeded(Integer)} - Set the number of partial successes</li>
-   *   <li>{@code numFailed(Integer)} - Set the number of failed conversions</li>
-   *   <li>{@code documents(List<DocumentArtifactItem>)} - Set the list of per-source artifact items</li>
-   *   <li>{@code document(DocumentArtifactItem)} - Add a single per-source artifact item (use with @Singular)</li>
+   * <li>{@code processingTime(Double)} - Set the total processing time in seconds</li>
+   * <li>{@code numConverted(Integer)} - Set the number of attempted conversions</li>
+   * <li>{@code numSucceeded(Integer)} - Set the number of successful conversions</li>
+   * <li>{@code numPartiallySucceeded(Integer)} - Set the number of partial successes</li>
+   * <li>{@code numFailed(Integer)} - Set the number of failed conversions</li>
+   * <li>{@code documents(List<DocumentArtifactItem>)} - Set the list of per-source artifact items</li>
+   * <li>{@code document(DocumentArtifactItem)} - Add a single per-source artifact item (use with @Singular)</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 
 }

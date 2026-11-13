@@ -1,23 +1,24 @@
 [versions]
 assertj = "3.27.7"
 awaitility = "4.3.0"
-jackson2 = "2.22.0"
-jackson3 = "3.2.0"
-jacoco = "0.8.14"
-jspecify = "1.0.0"
-junit = "6.1.1"
-lombok = "1.18.42"
-lombok-gradle = "9.5.0"
+graalvm-buildtools = "1.1.18"
+jackson2 = "2.23.0"
+jackson3 = "3.3.0"
+jacoco = "0.8.16"
+jspecify = "1.0.1"
+junit = "6.1.3"
+lombok = "1.18.48"
+lombok-gradle = "9.8.3"
 module-info = "1.14.2"
-spotless = "8.8.0"
+spotless = "8.10.4"
 semver4j = "6.0.0"
-slf4j = "2.0.18"
+slf4j = "2.0.20"
 testcontainers = "2.0.5"
-quarkus = "3.37.1"
+quarkus = "3.40.1.2"
 quarkus-github-api = "1.330.0"
-quarkus-wiremock = "1.6.3"
+quarkus-wiremock = "1.8.1"
 wiremock = "3.13.2"
-cyclonedx = "3.2.4"
+cyclonedx = "3.3.0"
 
 [libraries]
 # assertj
@@ -30,6 +31,12 @@ awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awa
 cyclonedx-gradle = { group = "org.cyclonedx", name = "cyclonedx-gradle-plugin", version.ref = "cyclonedx" }
 lombok-gradle = { group = "io.freefair.lombok", name = "io.freefair.lombok.gradle.plugin", version.ref = "lombok-gradle" }
 spotless-gradle = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
+# Tool versions read via libs.findVersion() in buildSrc (freefair LombokExtension.version and
+# jacoco.toolVersion). No build script references these entries; they exist only so Dependabot
+# can map the lombok and jacoco versions to Maven coordinates and keep them up to date.
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+jacoco-agent = { group = "org.jacoco", name = "org.jacoco.agent", version.ref = "jacoco" }
 
 # Jackson
 jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations" }
@@ -66,6 +73,7 @@ wiremock = { group = "org.wiremock", name = "wiremock", version.ref = "wiremock"
 
 [plugins]
 cyclonedx = { id = "org.cyclonedx.bom", version.ref = "cyclonedx" }
+graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-buildtools" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombok-gradle" }
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
 module-info = { id = "org.gradlex.extra-java-module-info", version.ref = "module-info" }

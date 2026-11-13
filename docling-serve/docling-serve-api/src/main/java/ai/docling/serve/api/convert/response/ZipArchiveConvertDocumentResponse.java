@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * <p>This response type is returned in any one the following scenarios:</p>
  * <ul>
- *   <li>The conversion request contains multiple source files with {@link ai.docling.serve.api.convert.request.target.InBodyTarget}/li>
- *   <li>The target type is {@link ai.docling.serve.api.convert.request.target.ZipTarget}</li>
+ * <li>The conversion request contains multiple source files with {@link ai.docling.serve.api.convert.request.target.InBodyTarget}/li>
+ * <li>The target type is {@link ai.docling.serve.api.convert.request.target.ZipTarget}</li>
  * </ul>
  *
  * <p>The response includes the ZIP file name and an input stream to read
@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see ai.docling.serve.api.convert.request.ConvertDocumentRequest
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ZipArchiveConvertDocumentResponse.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -77,11 +76,11 @@ public final class ZipArchiveConvertDocumentResponse extends ConvertDocumentResp
    *
    * <p>Builder methods:</p>
    * <ul>
-   *   <li>{@code fileName(String)} - Set the ZIP archive file name</li>
-   *   <li>{@code inputStream(InputStream)} - Set the input stream for the ZIP archive</li>
+   * <li>{@code fileName(String)} - Set the ZIP archive file name</li>
+   * <li>{@code inputStream(InputStream)} - Set the input stream for the ZIP archive</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 
 }

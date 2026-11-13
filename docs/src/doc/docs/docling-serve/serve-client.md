@@ -55,6 +55,21 @@ This artifact brings in the API types transitively, so you can use `DoclingServe
 
     Make sure you also include either a Jackson 2 or Jackson 3 dependency.
 
+## GraalVM Native Image
+
+The client uses the Jackson reflection metadata shipped by `docling-serve-api`
+and `docling-core`. GraalVM's default `ServiceLoader` support discovers the
+provider declared in `META-INF/services` and registers its constructor, so
+`DoclingServeApi.builder()` does not require additional client reflection or
+resource configuration. Include the client and your chosen Jackson dependency
+when building the native executable; provider discovery uses the dependencies
+available at image build time.
+
+Native smoke tests on GraalVM 25 cover service discovery, automatic Jackson
+selection with Jackson 2 or Jackson 3 individually, and health and conversion
+requests through Java's `HttpClient` against a local HTTP server. These checks
+include request serialization and nested document deserialization.
+
 ## Quick start
 
 Create a client with `DoclingServeApi.builder()`, build a request, and call `convertSource()`:
@@ -91,7 +106,7 @@ System.out.println(response.getDocument().getMarkdownContent());
 
 ## Core concepts and configuration
 
-### Builder factory and Jackson auto‑detection
+### Jackson auto‑detection
 
 `DoclingServeApi.builder()` chooses an implementation based on what's on your classpath:
 
@@ -99,8 +114,12 @@ System.out.println(response.getDocument().getMarkdownContent());
 - Else if Jackson 2 present → `DoclingServeJackson2Client`
 - Otherwise → `IllegalStateException`
 
-Advanced: You can customize the JSON mapper via `.toBuilder().jsonParser(...)` on the concrete
-client type if you need special Jackson modules or settings.
+`DoclingServeApi.builder()` only exposes the options shared by every implementation. For
+client-specific settings, such as the `HttpClient`, start from `DoclingServeClient.builder()` instead:
+it performs the same Jackson detection and returns the builder of the detected client. To customize
+the JSON mapper, whose type depends on the version of Jackson, use `DoclingServeJackson3Client.builder()`
+or `DoclingServeJackson2Client.builder()` and their `jsonParser(...)` method. Calling `toBuilder()` on a
+concrete client keeps its JSON mapper.
 
 ### Base URL
 
@@ -117,13 +136,14 @@ which avoids HTTP/2 downgrade mishaps in some environments.
 
 ### HTTP client customization (timeouts, proxies, TLS)
 
-You can supply and tune a `java.net.http.HttpClient.Builder`:
+You can supply and tune a `java.net.http.HttpClient.Builder` through the client-specific builder:
 
 ```java
 import java.net.http.HttpClient;
 import java.time.Duration;
+import ai.docling.serve.client.DoclingServeClient;
 
-DoclingServeApi api = DoclingServeApi.builder()
+DoclingServeApi api = DoclingServeClient.builder()
     .baseUrl("https://serve.example.com")
     .httpClientBuilder(HttpClient.newBuilder()
         .connectTimeout(Duration.ofSeconds(20))

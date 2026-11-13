@@ -23,15 +23,18 @@ publishing {
       else {
         from(components["java"])
 
-        val cyclonedxTask = tasks.named<org.cyclonedx.gradle.CyclonedxDirectTask>("cyclonedxDirectBom").get()
-        artifact(cyclonedxTask.jsonOutput) {
+        // Attach SBOM artifacts to publication
+        val cyclonedxTask = tasks.named<org.cyclonedx.gradle.CyclonedxDirectTask>("cyclonedxDirectBom")
+        artifact(cyclonedxTask.flatMap { it.jsonOutput }) {
           classifier = "cyclonedx"
           extension = "json"
+          builtBy(cyclonedxTask)
         }
 
-        artifact(cyclonedxTask.xmlOutput) {
+        artifact(cyclonedxTask.flatMap { it.xmlOutput }) {
           classifier = "cyclonedx"
           extension = "xml"
+          builtBy(cyclonedxTask)
         }
       }
 

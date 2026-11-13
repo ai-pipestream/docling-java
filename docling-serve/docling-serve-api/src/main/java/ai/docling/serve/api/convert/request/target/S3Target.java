@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = S3Target.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -22,6 +21,7 @@ public final class S3Target extends Target {
 
   /**
    * S3 access key
+   *
    * @param accessKey S3 access key
    * @return S3 access key
    */
@@ -31,6 +31,7 @@ public final class S3Target extends Target {
 
   /**
    * S3 secret key
+   *
    * @param secretKey S3 secret key
    * @return S3 secret key
    */
@@ -40,6 +41,7 @@ public final class S3Target extends Target {
 
   /**
    * S3 bucket name
+   *
    * @param bucket S3 bucket name
    * @return S3 bucket name
    */
@@ -49,6 +51,7 @@ public final class S3Target extends Target {
 
   /**
    * Prefix for the object keys on s3
+   *
    * @param keyPrefix Prefix for the object keys on s3
    * @return Prefix for the object keys on s3
    */
@@ -65,6 +68,6 @@ public final class S3Target extends Target {
   @lombok.Builder.Default
   private boolean verifySsl = true;
 
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

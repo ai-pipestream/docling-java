@@ -24,7 +24,6 @@ import ai.docling.serve.api.serialization.Jackson3ValidationErrorDetailListDeser
  * using the builder pattern.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ValidationError.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -50,6 +49,6 @@ public class ValidationError {
    * of objects with a more readable and flexible initialization format. The builder
    * follows the fluent API design by allowing method chaining.
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

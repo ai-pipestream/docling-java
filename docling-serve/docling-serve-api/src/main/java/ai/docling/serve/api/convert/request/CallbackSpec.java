@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.Nulls;
  * as documents are processed.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = CallbackSpec.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -53,6 +52,6 @@ public class CallbackSpec {
   @Nullable
   private String caCert;
 
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

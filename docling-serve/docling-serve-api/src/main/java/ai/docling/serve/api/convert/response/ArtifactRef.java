@@ -22,7 +22,6 @@ import ai.docling.serve.api.serialization.Jackson3InstantSerializer;
  * fields are omitted from JSON output.</p>
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ArtifactRef.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -79,12 +78,12 @@ public class ArtifactRef {
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code artifactType(ArtifactType)} - Set the artifact type</li>
-   *   <li>{@code mimeType(String)} - Set the MIME type</li>
-   *   <li>{@code uri(URI)} - Set the presigned URL</li>
-   *   <li>{@code urlExpiresAt(Instant)} - Set the expiry timestamp</li>
+   * <li>{@code artifactType(ArtifactType)} - Set the artifact type</li>
+   * <li>{@code mimeType(String)} - Set the MIME type</li>
+   * <li>{@code uri(URI)} - Set the presigned URL</li>
+   * <li>{@code urlExpiresAt(Instant)} - Set the expiry timestamp</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

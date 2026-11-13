@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -20,14 +21,14 @@ import ai.docling.serve.api.serialization.Jackson3DurationSerializer;
  * Options for configuring the document conversion process with Docling.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ConvertDocumentOptions.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
 @lombok.ToString
 public class ConvertDocumentOptions {
   /**
-   * Input format(s) to convert from. String or list of strings. Allowed values: docx, pptx, html, image, pdf, asciidoc, md, csv, xlsx, xml_uspto, xml_jats, mets_gbs, json_docling, audio, vtt. Optional, defaults to all formats.
+   * Input format(s) to convert from. String or list of strings. Allowed values: docx, pptx, html, image, pdf, asciidoc, md, csv, xlsx, xml_uspto, xml_jats, mets_gbs, json_docling,
+   * audio, vtt. Optional, defaults to all formats.
    */
   @JsonProperty("from_formats")
   @JsonSetter(nulls = Nulls.AS_EMPTY)
@@ -93,7 +94,8 @@ public class ConvertDocumentOptions {
   private TableFormerMode tableMode;
 
   /**
-   * If true, matches table cells predictions back to PDF cells. Can break table output if PDF cells are merged across table columns. If false, let table structure model define the text cells, ignore PDF cells.
+   * If true, matches table cells predictions back to PDF cells. Can break table output if PDF cells are merged across table columns. If false, let table structure model define the
+   * text cells, ignore PDF cells.
    */
   @JsonProperty("table_cell_matching")
   @Nullable
@@ -195,7 +197,8 @@ public class ConvertDocumentOptions {
   private Double pictureDescriptionAreaThreshold;
 
   /**
-   * Options for running a local vision-language model in the picture description. The parameters refer to a model hosted on Hugging Face. This parameter is mutually exclusive with picture_description_api.
+   * Options for running a local vision-language model in the picture description. The parameters refer to a model hosted on Hugging Face. This parameter is mutually exclusive with
+   * picture_description_api.
    */
   @JsonProperty("picture_description_local")
   @Nullable
@@ -209,14 +212,16 @@ public class ConvertDocumentOptions {
   private PictureDescriptionApi pictureDescriptionApi;
 
   /**
-   * Preset of local and API models for the vlm pipeline. This parameter is mutually exclusive with vlm_pipeline_model_local and vlm_pipeline_model_api. Use the other options for more parameters.
+   * Preset of local and API models for the vlm pipeline. This parameter is mutually exclusive with vlm_pipeline_model_local and vlm_pipeline_model_api. Use the other options for
+   * more parameters.
    */
   @JsonProperty("vlm_pipeline_model")
   @Nullable
   private VlmModelType vlmPipelineModel;
 
   /**
-   * Options for running a local vision-language model for the vlm pipeline. The parameters refer to a model hosted on Hugging Face. This parameter is mutually exclusive with vlm_pipeline_model_api and vlm_pipeline_model.
+   * Options for running a local vision-language model for the vlm pipeline. The parameters refer to a model hosted on Hugging Face. This parameter is mutually exclusive with
+   * vlm_pipeline_model_api and vlm_pipeline_model.
    */
   @JsonProperty("vlm_pipeline_model_local")
   @Nullable
@@ -229,6 +234,26 @@ public class ConvertDocumentOptions {
   @Nullable
   private String vlmPipelineModelApi;
 
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  /**
+   * Whether heading hierarchy inference is enabled. Derived from {@link #getHeadingHierarchyOptions()}
+   * — {@code true} when options are present, {@code false} otherwise.
+   */
+  @JsonProperty("do_pdf_heading_hierarchy")
+  public boolean doPdfHeadingHierarchy() {
+    return headingHierarchyOptions != null;
+  }
+
+  /**
+   * Options for inferring PDF section-header levels (H1–H6) from bookmarks, numbering and style.
+   * Setting this enables heading hierarchy inference; leave it unset to keep all headings at
+   * level 1. Use the defaults ({@code HeadingHierarchyOptions.builder().build()}) to enable it
+   * without any fine-tuning.
+   */
+  @JsonProperty("pdf_heading_hierarchy_options")
+  @Nullable
+  private HeadingHierarchyOptions headingHierarchyOptions;
+
+  @JsonIgnoreProperties("do_pdf_heading_hierarchy")
+  public static class Builder {
+  }
 }

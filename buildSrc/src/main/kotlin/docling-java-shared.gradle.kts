@@ -31,10 +31,8 @@ dependencies {
 }
 
 testing {
-  suites {
-    val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter()
-    }
+  suites.withType<JvmTestSuite> {
+    useJUnitJupiter()
   }
 }
 
@@ -49,10 +47,15 @@ spotless {
     toggleOffOn()
     target("src/*/java/**/*.java")
 
-    // Only going to enforce import order for now
     importOrderFile("${rootProject.layout.projectDirectory}/.spotless/import-order.txt")
 
-    // Project maintainers need to decide what the formatting rules should be
+    eclipse().configFile("${rootProject.layout.projectDirectory}/.spotless/eclipse-java-formatter.xml")
+
+    removeUnusedImports()
+
+    endWithNewline()
+
+    trimTrailingWhitespace()
   }
 }
 

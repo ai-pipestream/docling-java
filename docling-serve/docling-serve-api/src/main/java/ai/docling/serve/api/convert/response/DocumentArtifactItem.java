@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.Nulls;
  * collections are omitted from JSON output.</p>
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = DocumentArtifactItem.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -100,18 +99,18 @@ public class DocumentArtifactItem {
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code sourceIndex(Integer)} - Set the source index</li>
-   *   <li>{@code sourceUri(String)} - Set the source URI</li>
-   *   <li>{@code filename(String)} - Set the source filename</li>
-   *   <li>{@code status(ConversionStatus)} - Set the conversion status</li>
-   *   <li>{@code errors(List<ErrorItem>)} - Set the list of errors</li>
-   *   <li>{@code error(ErrorItem)} - Add a single error (use with @Singular)</li>
-   *   <li>{@code timings(Map<String, ProfilingItem>)} - Set the timings map</li>
-   *   <li>{@code timing(String, ProfilingItem)} - Add a single timing entry (use with @Singular)</li>
-   *   <li>{@code artifacts(List<ArtifactRef>)} - Set the list of artifact references</li>
-   *   <li>{@code artifact(ArtifactRef)} - Add a single artifact reference (use with @Singular)</li>
+   * <li>{@code sourceIndex(Integer)} - Set the source index</li>
+   * <li>{@code sourceUri(String)} - Set the source URI</li>
+   * <li>{@code filename(String)} - Set the source filename</li>
+   * <li>{@code status(ConversionStatus)} - Set the conversion status</li>
+   * <li>{@code errors(List<ErrorItem>)} - Set the list of errors</li>
+   * <li>{@code error(ErrorItem)} - Add a single error (use with @Singular)</li>
+   * <li>{@code timings(Map<String, ProfilingItem>)} - Set the timings map</li>
+   * <li>{@code timing(String, ProfilingItem)} - Add a single timing entry (use with @Singular)</li>
+   * <li>{@code artifacts(List<ArtifactRef>)} - Set the list of artifact references</li>
+   * <li>{@code artifact(ArtifactRef)} - Add a single artifact reference (use with @Singular)</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

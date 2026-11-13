@@ -1,5 +1,6 @@
 open module ai.docling.serve.api {
   requires transitive ai.docling.core;
+  requires transitive org.slf4j;
   requires static org.jspecify;
   requires static lombok;
 
@@ -12,6 +13,8 @@ open module ai.docling.serve.api {
 
   exports ai.docling.serve.api;
   exports ai.docling.serve.api.health;
+  exports ai.docling.serve.api.request;
+  exports ai.docling.serve.api.response;
   exports ai.docling.serve.api.util;
 
   // Chunking API
@@ -42,5 +45,7 @@ open module ai.docling.serve.api {
 
   // SPI
   exports ai.docling.serve.api.spi;
+
+  uses ai.docling.serve.api.spi.DoclingServeApiProvider;
   uses ai.docling.serve.api.spi.DoclingServeApiBuilderFactory;
 }

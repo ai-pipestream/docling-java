@@ -22,7 +22,6 @@ import ai.docling.serve.api.serialization.Jackson3InstantSerializer;
  * collections are omitted from JSON output.</p>
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ProfilingItem.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -79,14 +78,14 @@ public class ProfilingItem {
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code scope(ProfilingScope)} - Set the profiling scope</li>
-   *   <li>{@code count(Integer)} - Set the measurement count</li>
-   *   <li>{@code times(List<Double>)} - Set the list of durations</li>
-   *   <li>{@code time(Double)} - Add a single duration (use with @Singular)</li>
-   *   <li>{@code startTimestamps(List<Instant>)} - Set the list of start timestamps</li>
-   *   <li>{@code startTimestamp(Instant)} - Add a single start timestamp (use with @Singular)</li>
+   * <li>{@code scope(ProfilingScope)} - Set the profiling scope</li>
+   * <li>{@code count(Integer)} - Set the measurement count</li>
+   * <li>{@code times(List<Double>)} - Set the list of durations</li>
+   * <li>{@code time(Double)} - Add a single duration (use with @Singular)</li>
+   * <li>{@code startTimestamps(List<Instant>)} - Set the list of start timestamps</li>
+   * <li>{@code startTimestamp(Instant)} - Add a single start timestamp (use with @Singular)</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

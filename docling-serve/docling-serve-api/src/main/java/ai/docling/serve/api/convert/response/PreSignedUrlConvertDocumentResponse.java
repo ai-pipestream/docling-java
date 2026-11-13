@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * <p>This response type is returned in any one the following scenarios:</p>
  * <ul>
- *   <li>Target type is {@link ai.docling.serve.api.convert.request.target.PutTarget}</li>
- *   <li>Target type is {@link ai.docling.serve.api.convert.request.target.S3Target}</li>
+ * <li>Target type is {@link ai.docling.serve.api.convert.request.target.PutTarget}</li>
+ * <li>Target type is {@link ai.docling.serve.api.convert.request.target.S3Target}</li>
  * </ul>
  *
  * <p>Serialization uses {@link JsonInclude.Include#NON_EMPTY}, so nulls and empty
@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see ai.docling.serve.api.convert.request.target.PutTarget
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = PreSignedUrlConvertDocumentResponse.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -90,14 +89,14 @@ public final class PreSignedUrlConvertDocumentResponse extends ConvertDocumentRe
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code processingTime(Double)} - Set the total processing time in seconds</li>
-   *   <li>{@code numConverted(Integer)} - Set the number of attempted conversions</li>
-   *   <li>{@code numSucceeded(Integer)} - Set the number of successful conversions</li>
-   *   <li>{@code numPartiallySucceeded(Integer)} - Set the number of partial successes</li>
-   *   <li>{@code numFailed(Integer)} - Set the number of failed conversions</li>
+   * <li>{@code processingTime(Double)} - Set the total processing time in seconds</li>
+   * <li>{@code numConverted(Integer)} - Set the number of attempted conversions</li>
+   * <li>{@code numSucceeded(Integer)} - Set the number of successful conversions</li>
+   * <li>{@code numPartiallySucceeded(Integer)} - Set the number of partial successes</li>
+   * <li>{@code numFailed(Integer)} - Set the number of failed conversions</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 
 }

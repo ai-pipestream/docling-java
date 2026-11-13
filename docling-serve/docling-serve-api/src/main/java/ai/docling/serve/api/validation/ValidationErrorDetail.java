@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.Nulls;
  * validation error, and the input causing the error.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ValidationErrorDetail.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -81,6 +80,6 @@ public class ValidationErrorDetail {
    * This class is used to implement the builder pattern, providing a flexible
    * and readable mechanism for initializing instances of the enclosing class.
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

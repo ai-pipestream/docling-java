@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
  *
  * <p>This response type is returned when both the following conditions hold:</p>
  * <ul>
- *   <li>The conversion request contains a single source</li>
- *   <li>The target type is {@link ai.docling.serve.api.convert.request.target.InBodyTarget}</li>
+ * <li>The conversion request contains a single source</li>
+ * <li>The target type is {@link ai.docling.serve.api.convert.request.target.InBodyTarget}</li>
  * </ul>
  *
  * <p>The converted document content is included directly in the response body,
@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.Nulls;
  * @see DocumentResponse
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = InBodyConvertDocumentResponse.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -97,15 +96,15 @@ public final class InBodyConvertDocumentResponse extends ConvertDocumentResponse
    *
    * <p>Builder methods:
    * <ul>
-   *   <li>{@code document(DocumentResponse)} - Set the converted document</li>
-   *   <li>{@code error(ErrorItem)} - Add a single error (use with @Singular)</li>
-   *   <li>{@code errors(List<ErrorItem>)} - Set the list of errors</li>
-   *   <li>{@code processingTime(Double)} - Set the processing time in seconds</li>
-   *   <li>{@code status(String)} - Set the conversion status</li>
-   *   <li>{@code timing(String, Object)} - Add a single timing entry (use with @Singular)</li>
-   *   <li>{@code timings(Map<String, Object>)} - Set the map of timing information</li>
+   * <li>{@code document(DocumentResponse)} - Set the converted document</li>
+   * <li>{@code error(ErrorItem)} - Add a single error (use with @Singular)</li>
+   * <li>{@code errors(List<ErrorItem>)} - Set the list of errors</li>
+   * <li>{@code processingTime(Double)} - Set the processing time in seconds</li>
+   * <li>{@code status(String)} - Set the conversion status</li>
+   * <li>{@code timing(String, Object)} - Add a single timing entry (use with @Singular)</li>
+   * <li>{@code timings(Map<String, Object>)} - Set the map of timing information</li>
    * </ul>
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }

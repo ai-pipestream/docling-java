@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * for flexible and readable object construction.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@tools.jackson.databind.annotation.JsonDeserialize(builder = ValidationErrorContext.Builder.class)
 @lombok.extern.jackson.Jacksonized
 @lombok.Builder(toBuilder = true)
 @lombok.Getter
@@ -42,6 +41,6 @@ public class ValidationErrorContext {
    * approach to construct objects of the enclosing class. It allows for a fluent
    * API style by enabling method chaining during object creation.
    */
-  @tools.jackson.databind.annotation.JsonPOJOBuilder(withPrefix = "")
-  public static class Builder { }
+  public static class Builder {
+  }
 }
